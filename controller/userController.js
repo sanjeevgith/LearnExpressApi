@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userService = require("../service/userService");
-const { user } = require("../_helpers/db");
+
 
 //test api
 router.get("/getuser", (req, res) => {
@@ -47,8 +47,10 @@ router.post("/saveuser", async (req, res) => {
 router.put("/updateuser/:_id", async (req, res) => {
   const userId = req.params._id;
   const userDataToUpdate = req.body;
+//   console.log('userId', userId)
+//   console.log("userDataToUpdate",userDataToUpdate);
   try {
-    if (!agentId) {
+    if (!userId) {
       return res
         .status(400)
         .json({ type: "warning", msg: "Please provide user ID" });

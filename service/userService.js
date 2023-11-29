@@ -63,9 +63,9 @@ async function saveuser(userdata) {
 
 
 async function updatuser(userid,userdata){
+  // console.log("====>",userid,userdata);
   try {
     const savedUser = await User.findByIdAndUpdate(userid,userdata);
-    // console.log("savedUser",savedUser);
     return savedUser;
   } catch (error) {
     throw new Error("Error updating user");
