@@ -1,5 +1,7 @@
 const { User } = require("../_helpers/db");
 const mongoose = require('mongoose')
+const CryptoJS = require("crypto-js");
+
 
 module.exports = {
   demo,
@@ -8,6 +10,7 @@ module.exports = {
   updatuser,
   deleteuser,
   getalluser,
+  getUserById,
 };
 
 //test function
@@ -32,7 +35,11 @@ async function saveuser(userdata) {
       email: userdata.email,
       contact: userdata.contact, 
       dob: userdata.dob,
-      password: userdata.password,
+      // password: userdata.password,
+      password: CryptoJS.AES.encrypt(
+        userdata.password,
+        process.env.PASS_SECRETKEY)
+        .toString(),
       role: userdata.role,
       address: { 
         addressline: userdata.addressline,
@@ -90,5 +97,18 @@ async function getalluser(){
    return getallUser;
   }catch{
     throw new Error("Error getting all user user");
+  }
+}
+
+
+async function getUserById(userid){
+  try{
+    !userid && res.status(401).json("Wrong credentials!")
+    // console.log("userid",userid);
+    const getUser = await User.findById(userid);
+    // console.log("getUser",getUser);
+    return getUser;
+  }catch{
+    throw new Error("Error getUserById");
   }
 }
