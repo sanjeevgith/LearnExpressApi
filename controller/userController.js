@@ -59,7 +59,7 @@ router.get(
 );
 
 router.post(
-  "/saveuser",
+  "/register",
   verifyToken,
   verifyTokenAndAdmin,
   verifyTokenAndAdminFullcontrol,
