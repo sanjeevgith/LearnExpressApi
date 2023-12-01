@@ -23,26 +23,30 @@ router.get("/getuser", (req, res) => {
 });
 //test end
 
-router.get("/getUserByid/:_id", async (req, res) => {
-  const userId = req.params._id;
-  try {
-    if (!userId) {
-      return res.status(400).json({ message: "Please provide user id" });
+router.get(
+  "/getUserByid/:_id",
+  verifyToken,
+  verifyTokenAndAdmin,
+  async (req, res) => {
+    const userId = req.params._id;
+    try {
+      if (!userId) {
+        return res.status(400).json({ message: "Please provide user id" });
+      }
+      const Getuserbyid = await userService.getUserById(userId);
+      console.log(Getuserbyid);
+      res
+        .status(200)
+        .json({ type: "success", msg: "Get User By Id", data: Getuserbyid });
+    } catch (error) {
+      res.status(500).json({ type: "error", msg: "Server error" });
     }
-    const Getuserbyid = await userService.getUserById(userId);
-    console.log(Getuserbyid);
-    res
-      .status(200)
-      .json({ type: "success", msg: "Get User By Id", data: Getuserbyid });
-  } catch (error) {
-    res.status(500).json({ type: "error", msg: "Server error" });
   }
-});
+);
 
 router.get(
   "/getalluser",
   verifyToken,
-  verifyTokenAndAdmin,
   verifyTokenAndAdminFullcontrol,
   async (req, res) => {
     try {
@@ -61,7 +65,6 @@ router.get(
 router.post(
   "/register",
   verifyToken,
-  verifyTokenAndAdmin,
   verifyTokenAndAdminFullcontrol,
   async (req, res) => {
     const userpostdata = req.body;
@@ -107,7 +110,6 @@ router.delete(
   "/deleteuser/:_id",
   verifyToken,
   verifyTokenAndAdmin,
-  verifyTokenAndAdminFullcontrol,
   async (req, res) => {
     const userId = req.params._id;
     try {
