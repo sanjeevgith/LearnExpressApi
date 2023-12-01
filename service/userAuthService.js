@@ -9,6 +9,7 @@ module.exports = {
 
 async function login(email,password_) {
   try {
+    //find one accept object
     let user = await User.findOne({email:email});
     // console.log('user', user)
     const hashedPassword = CryptoJS.AES.decrypt(

@@ -15,7 +15,7 @@ module.exports = {
 
 //test function
 async function demo() {
-  return await "demo called";
+  return await "<h1>test api is working </h1>";
 }
 
 async function checkUserExistence(userId) {
@@ -31,6 +31,7 @@ async function saveuser(userdata) {
   // console.log("userdata===> ",userdata);
   try {
     const newuser = new User({
+      usercode:userdata.usercode,
       name: userdata.name,
       email: userdata.email,
       contact: userdata.contact, 

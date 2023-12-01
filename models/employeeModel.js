@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const employeeSchema = new mongoose.Schema(
   {
-    usercode: { type: String },
+    empcode: { type: String },
     name: { type: String },
     email: { type: String },
     contact: { type: String },
@@ -24,12 +24,14 @@ const userSchema = new mongoose.Schema(
       bank_name: { type: String },
       branch_name: { type: String },
     },
+    isActive:{ type:Boolean},
+    profile_img:{type:String},
     password: { type: String },
     role: {
       type: [
         {
           type: Array,
-          enum: ["user", "admin"],
+          enum: ["intern", "fulltime", "parttime", "freelancer"],
         },
       ],
     },
@@ -39,4 +41,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("userModel", userSchema,"usermodel");
+module.exports = mongoose.model(
+  "employeemodel",
+  employeeSchema,
+  "employeemodel"
+);

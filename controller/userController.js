@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const userService = require("../service/userService");
 const userAuthService = require("../service/userAuthService");
+const verifyToken = require("../middleware/verifyToken")
+
+// router.use(verifyToken)
 
 //test api
 router.get("/getuser", (req, res) => {
@@ -107,7 +110,7 @@ router.post("/login", async (req, res) => {
       .status(200)
       .json({ type: "success", msg: "User Login Details", data: loginDetails });
   } catch (error) {
-    res.status(500).json({ type: "error", msg: "Server error" });
+    res.status(401).json({ type: "error", msg: "Server error" });
   }
 });
 
