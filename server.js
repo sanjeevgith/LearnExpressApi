@@ -16,7 +16,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:4200" }));
 
 //api URL demo http://localhost:5000/api/userController/apiroutename
 app.use('/api/userController', require('./controller/userController'));
-app.use('/api/employeeController', require('./controller/employeeController'));
+
 
 
 

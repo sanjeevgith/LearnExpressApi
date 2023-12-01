@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     usercode: { type: String },
+    companycode: { type: String },
     name: { type: String },
     email: { type: String },
     contact: { type: String },
@@ -24,6 +25,8 @@ const userSchema = new mongoose.Schema(
       bank_name: { type: String },
       branch_name: { type: String },
     },
+    isActive: { type: Boolean },
+    profile_img: { type: String },
     password: { type: String },
     role: {
       type: [
@@ -39,4 +42,4 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("userModel", userSchema,"usermodel");
+module.exports = mongoose.model("userModel", userSchema, "usermodel");
