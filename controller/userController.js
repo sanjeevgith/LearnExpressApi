@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const userService = require("../service/userService");
 const userAuthService = require("../service/userAuthService");
+const multer = require("multer");
+const path = require('path');
+
 const {
   verifyToken,
   verifyTokenAndAdmin,
@@ -62,14 +65,27 @@ router.get(
   }
 );
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Directory where uploaded files will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // File name
+  },
+});
+const upload = multer({ storage: storage });
+
 router.post(
   "/register",
   verifyToken,
   verifyTokenAndAdminFullcontrol,
+  upload.single('file'),
   async (req, res) => {
-    const userpostdata = req.body;
+    const userpostdata = req.body.jsonData;  //pass userpostdata directly into saveuser() if we use frontend
+    const jsonData = JSON.parse(userpostdata);
+    const file = req.file;
     try {
-      const newUser = await userService.saveuser(userpostdata);
+      const newUser = await userService.saveuser(jsonData,file);
       res
         .status(200)
         .json({ type: "success", msg: "User created", data: newUser });
@@ -79,6 +95,8 @@ router.post(
     }
   }
 );
+
+
 
 router.put(
   "/updateuser/:_id",

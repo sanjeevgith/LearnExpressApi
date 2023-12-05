@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
-    console.log(req.user.role);
+    // console.log(req.user.role);
     let hasUserRole = false;
     let hasAdminRole = false;
     for (let i = 0; i < req.user.role.length; i++) {
@@ -39,7 +39,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
 
 const verifyTokenAndAdminFullcontrol = (req, res, next) => {
     verifyToken(req, res, () => {
-      console.log(req.user.role);
+      // console.log(req.user.role);
       let hasAdminRole = false;
       for (let i = 0; i < req.user.role.length; i++) {
        if (req.user.role[i] == "admin") {

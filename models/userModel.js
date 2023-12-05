@@ -26,7 +26,10 @@ const userSchema = new mongoose.Schema(
       branch_name: { type: String },
     },
     isActive: { type: Boolean },
-    profile_img: { type: String },
+    profile_img: {
+      imagename: { type: String },
+      path: { type: String },
+    },
     password: { type: String },
     role: {
       type: [

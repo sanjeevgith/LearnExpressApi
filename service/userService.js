@@ -1,7 +1,6 @@
 const { User } = require("../_helpers/db");
-const mongoose = require("mongoose");
 const CryptoJS = require("crypto-js");
-const multer = require("multer");
+
 
 module.exports = {
   demo,
@@ -28,8 +27,11 @@ async function checkUserExistence(userId) {
 }
 
 
-async function saveuser(userdata) {
-  console.log('userdata.profile_img', userdata.profile_img.file)
+
+
+async function saveuser(userdata,file) {
+  // console.log("userdata==>",userdata);
+  // console.log("file==>",file);
   try {
     const newuser = new User({
       usercode: userdata.usercode,
@@ -38,14 +40,16 @@ async function saveuser(userdata) {
       email: userdata.email,
       contact: userdata.contact,
       dob: userdata.dob,
-      // password: userdata.password,
       password: CryptoJS.AES.encrypt(
         userdata.password,
         process.env.PASS_SECRETKEY
       ).toString(),
       role: userdata.role,
       isActive: userdata.isActive,
-      profile_img: userdata.profile_img,
+      profile_img: {
+        imagename:file.originalname,
+        path:file.path
+      },
       address: {
         addressline: userdata.addressline,
         city: userdata.city,
@@ -64,7 +68,7 @@ async function saveuser(userdata) {
         branch_name: userdata.branch_name,
       },
     });
-    console.log("newuser", newuser);
+    console.log("newuser==>",newuser);
     const savedUser = await newuser.save();
     return savedUser;
   } catch (error) {

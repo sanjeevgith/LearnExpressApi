@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/learnexpressapi", {
-//   useCreateIndex: true,
+const MONGO_URL = process.env.MONGO_URL;
+mongoose.connect(MONGO_URL, {
+//   useCreateIndex: false,
 //   useUnifiedTopology: true,
 //   useFindAndModify: false,
 //   useNewUrlParser: true,
