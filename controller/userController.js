@@ -102,11 +102,11 @@ router.put(
   "/updateuser/:_id",
   verifyToken,
   verifyTokenAndAdmin,
+  upload.single('file'),
   async (req, res) => {
     const userId = req.params._id;
     const userDataToUpdate = req.body;
-    //   console.log('userId', userId)
-    //   console.log("userDataToUpdate",userDataToUpdate);
+    userDataToUpdate.file = req.file;
     try {
       if (!userId) {
         return res

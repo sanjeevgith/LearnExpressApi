@@ -68,7 +68,7 @@ async function saveuser(userdata,file) {
         branch_name: userdata.branch_name,
       },
     });
-    console.log("newuser==>",newuser);
+    // console.log("newuser==>",newuser);
     const savedUser = await newuser.save();
     return savedUser;
   } catch (error) {
@@ -78,7 +78,14 @@ async function saveuser(userdata,file) {
 
 
 async function updatuser(userid, userdata) {
-  // console.log("====>",userid,userdata);
+  // console.log("====>",userdata);
+  if(userdata.file){
+    const profile_img= {
+      imagename:userdata.file.originalname,
+      path:userdata.file.path
+    }
+    userdata.profile_img = profile_img;
+  }
   try {
     const savedUser = await User.findByIdAndUpdate(userid, userdata);
     return savedUser;

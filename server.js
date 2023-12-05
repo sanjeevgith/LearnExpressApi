@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const open = require('open');
 require("dotenv").config();
 
 //server using node
